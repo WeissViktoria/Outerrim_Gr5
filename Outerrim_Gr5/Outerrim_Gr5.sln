@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebGUI", "WebGUI\WebGUI.csproj", "{2D8EC038-824C-4B46-8FF7-BECBF9FF6674}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Model\Model.csproj", "{CDB71410-A085-48C0-B163-29E9022FFBFA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2D8EC038-824C-4B46-8FF7-BECBF9FF6674}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D8EC038-824C-4B46-8FF7-BECBF9FF6674}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D8EC038-824C-4B46-8FF7-BECBF9FF6674}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D8EC038-824C-4B46-8FF7-BECBF9FF6674}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CDB71410-A085-48C0-B163-29E9022FFBFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CDB71410-A085-48C0-B163-29E9022FFBFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CDB71410-A085-48C0-B163-29E9022FFBFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CDB71410-A085-48C0-B163-29E9022FFBFA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
