@@ -1,6 +1,9 @@
-﻿namespace Model.Entities;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
-public class Weapon
+namespace Model.Entities;
+
+[Table("WEAPONS")]
+public class Weapon: Machinery
 {
     
 }
