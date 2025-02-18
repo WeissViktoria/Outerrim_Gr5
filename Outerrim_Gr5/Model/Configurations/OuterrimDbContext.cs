@@ -1,6 +1,6 @@
 ﻿namespace Model.Configurations;
 
-public class OuterrimContext
+public class OuterrimDbContext
 {
     
 }
