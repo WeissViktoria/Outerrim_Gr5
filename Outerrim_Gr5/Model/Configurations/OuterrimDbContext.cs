@@ -11,7 +11,7 @@ public class OuterrimDbContext : DbContext
     public DbSet<Compartment> Compartments { get; set; }
     public DbSet<Mercenary> Mercenaries { get; set; }
     public DbSet<Crew> Crews { get; set; }
-    public DbSet<AircraftSpezification> AircraftSpezifications { get; set; }
+    public DbSet<AircraftSpezifikation> AircraftSpezifications { get; set; }
     public DbSet<CrimeSyndicate> CrimeSyndicates {get;set;}
     public DbSet<MercenaryReputation> MercenaryReputations { get; set; }
     public DbSet<Machinery> Machineries { get; set; }
@@ -20,41 +20,32 @@ public class OuterrimDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Machinery>().HasDiscriminator<string>("MACHINERY_TYPE")
-            .HasValue<Weapon>("WEAPONS")
-            .HasValue<EnviromentalSystem>("ENERGY_SYSTEMS")
-            .HasValue<EnergySystem>("ENVIRONMENTAL_SYSTEMS");
-        
-        modelBuilder.Entity<Machinery>()
-            .HasOne(m => m.Compartment)
+
+        modelBuilder.Entity<Aircraft>()
+            .HasOne(a => a.Spezifikation)
             .WithMany()
-            .HasForeignKey(m => m.Compartment_Id);
-        
+            .HasForeignKey(a => a.SpezifikationId);
+
         modelBuilder.Entity<Compartment>()
             .HasOne(c => c.Aircraft)
-            .WithMany(a => a.Compartments)
+            .WithMany(c => c.Compartments)
             .HasForeignKey(c => c.Aircraft_Id);
 
         modelBuilder.Entity<Crew>()
             .HasKey(c => new { c.Aircraft_Id, c.Mercenary_Id });
-        
+
         modelBuilder.Entity<Crew>()
             .HasOne(c => c.Aircraft)
-            .WithMany(a => a.CrewItems)
+            .WithMany(c => c.CrewItems)
             .HasForeignKey(c => c.Aircraft_Id);
-        
+
         modelBuilder.Entity<Crew>()
             .HasOne(c => c.Mercenary)
             .WithMany()
             .HasForeignKey(c => c.Mercenary_Id);
 
-        modelBuilder.Entity<Aircraft>()
-            .HasOne(a => a.Spezification)
-            .WithMany()
-            .HasForeignKey(a => a.SpezificationId);
-        
         modelBuilder.Entity<MercenaryReputation>()
-            .HasKey(mr => new { mr.MercenaryId, mr.CrimeSynicateId });
+            .HasKey(mr => new { mr.MercenaryId, mr.CrimeSyndicateId });
         
         modelBuilder.Entity<MercenaryReputation>()
             .HasOne(mr => mr.Mercenary)
@@ -64,7 +55,18 @@ public class OuterrimDbContext : DbContext
         modelBuilder.Entity<MercenaryReputation>()
             .HasOne(mr => mr.CrimeSyndicate)
             .WithMany()
-            .HasForeignKey(mr => mr.CrimeSynicateId);
+            .HasForeignKey(mr => mr.CrimeSyndicateId);
+        
+        modelBuilder.Entity<EnergySystem>().ToTable("ENERGY_SYSTEMS");
+        modelBuilder.Entity<EnviromentalSystem>().ToTable("ENVIRONMENTAL_SYSTEMS");
+        modelBuilder.Entity<Weapon>().ToTable("WEAPONS");
+        
+        modelBuilder.Entity<Machinery>()
+            .HasOne(m => m.Compartment)
+            .WithMany()
+            .HasForeignKey(m => m.CompartmentId);
+
     }
+    
     
 }

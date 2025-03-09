@@ -34,4 +34,3 @@ public class Aircraft
     
     public List<Crew> CrewItems { get; set; }
 }
-

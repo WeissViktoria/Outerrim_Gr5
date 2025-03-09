@@ -22,18 +22,3 @@ public class Machinery
     [Column("FUNCTION")]
     public string Function { get; set; }
 }
-
-public class EnviromentalSystem : Machinery
-{
- 
-}
-
-public class EnergySystem : Machinery
-{
-  
-}
-
-public class Weapon : Machinery
-{
-    
-}
