@@ -1,0 +1,101 @@
+﻿@page "/aircraft-crew"
+@using Microsoft.EntityFrameworkCore
+@using Model.Configurations
+@using Model.Entities
+@inject OuterrimDbContext DbContext
+<h3>List_Aircraft_Crew</h3>
+
+<!-- Flugzeugauswahl -->
+<label for="aircraft">Select Aircraft:</label>
+<select @bind="SelectedAircraftId" @onchange="LoadCrew">
+    <option value="">-- Select an Aircraft --</option>
+    @foreach (var aircraft in Aircrafts)
+    {
+    <option value="@aircraft.ID">@aircraft.Name</option>
+    }
+</select>
+
+@if (SelectedAircraft != null)
+{
+    <h4>Current Crew for @SelectedAircraft.Name</h4>
+
+    <ul>
+        @foreach (var crewMember in CrewMembers)
+        {
+            <li>@crewMember.Mercenary.FirstName @crewMember.Mercenary.LastName
+                <button @onclick="() => RemoveFromCrew(crewMember.Mercenary_Id)">Remove</button>
+            </li>
+        }
+    </ul>
+
+    <h4>Add Mercenary</h4>
+    <select @bind="SelectedMercenaryId">
+        <option value="">-- Select a Mercenary --</option>
+        @foreach (var mercenary in AvailableMercenaries)
+        {
+            <option value="@mercenary.Id">@mercenary.FirstName @mercenary.LastName</option>
+        }
+    </select>
+    <button @onclick="AddToCrew">Add</button>
+}
+
+@code {
+    private List<Aircraft> Aircrafts = new();
+    private List<Crew> CrewMembers = new();
+    private List<Mercenary> AvailableMercenaries = new();
+    private int? SelectedAircraftId;
+    private int? SelectedMercenaryId;
+    private Aircraft? SelectedAircraft;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Aircrafts = await DbContext.Aircrafts.ToListAsync();
+    }
+
+    private async Task LoadCrew(ChangeEventArgs e)
+    {
+        SelectedAircraft = Aircrafts.FirstOrDefault(a => a.ID == SelectedAircraftId);
+        if (SelectedAircraft != null)
+        {
+            CrewMembers = await DbContext.Crews
+                .Where(c => c.Aircraft_Id == SelectedAircraftId)
+                .Include(c => c.Mercenary)
+                .ToListAsync();
+
+            AvailableMercenaries = await DbContext.Mercenaries
+                .Where(m => !CrewMembers.Any(c => c.Mercenary_Id == m.Id))
+                .ToListAsync();
+        }
+    }
+
+    private async Task AddToCrew()
+    {
+        if (SelectedAircraftId.HasValue && SelectedMercenaryId.HasValue)
+        {
+            var newCrewMember = new Crew
+            {
+                Aircraft_Id = SelectedAircraftId.Value,
+                Mercenary_Id = SelectedMercenaryId.Value
+            };
+
+            DbContext.Crews.Add(newCrewMember);
+            await DbContext.SaveChangesAsync();
+            await LoadCrew(null);
+        }
+    }
+
+    private async Task RemoveFromCrew(int mercenaryId)
+    {
+        var crewMember = await DbContext.Crews
+            .FirstOrDefaultAsync(c => c.Aircraft_Id == SelectedAircraftId && c.Mercenary_Id == mercenaryId);
+
+        if (crewMember != null)
+        {
+            DbContext.Crews.Remove(crewMember);
+            await DbContext.SaveChangesAsync();
+            await LoadCrew(null);
+        }
+    }
+
+}
+
