@@ -32,7 +32,7 @@ public class Aircraft
     [Required, StringLength(100)]
     [Column("NAME")] 
     public string Name { get; set; }
-    
-    public List<Compartment> Compartments { get; set; }
-    public List<Crew> CrewItems { get; set; }
+
+    public List<Compartment> Compartments { get; set; } = new();
+    public List<Crew> CrewItems { get; set; } = new();
 }
