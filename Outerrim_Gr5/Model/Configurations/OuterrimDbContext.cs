@@ -1,7 +1,7 @@
 ﻿using System.Reflection.PortableExecutable;
 using Microsoft.EntityFrameworkCore;
 using Model.Entities;
-using Model.Entities.Depitors;
+using Weapon = Model.Entities.Weapon;
 
 namespace Model.Configurations;
 
@@ -15,14 +15,12 @@ public class OuterrimDbContext : DbContext
     public DbSet<CrimeSyndicate> CrimeSyndicates {get;set;}
     public DbSet<MercenaryReputation> MercenaryReputations { get; set; }
     public DbSet<Machinery> Machineries { get; set; }
-    public DbSet<Weapon> Weapons { get; set; }
-    public DbSet<EnergySystem> EnergySystems { get; set; }
-    public DbSet<EnviromentalSystem> EnvironmentalSystems { get; set; }
     
     public OuterrimDbContext(DbContextOptions<OuterrimDbContext> options) : base(options) { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+
         modelBuilder.Entity<Aircraft>()
             .HasOne(a => a.Spezifikation)
             .WithMany()
@@ -30,7 +28,7 @@ public class OuterrimDbContext : DbContext
 
         modelBuilder.Entity<Compartment>()
             .HasOne(c => c.Aircraft)
-            .WithMany()
+            .WithMany(c => c.Compartments)
             .HasForeignKey(c => c.Aircraft_Id);
 
         modelBuilder.Entity<Crew>()
@@ -38,7 +36,7 @@ public class OuterrimDbContext : DbContext
 
         modelBuilder.Entity<Crew>()
             .HasOne(c => c.Aircraft)
-            .WithMany()
+            .WithMany(c => c.CrewItems)
             .HasForeignKey(c => c.Aircraft_Id);
 
         modelBuilder.Entity<Crew>()
@@ -58,6 +56,16 @@ public class OuterrimDbContext : DbContext
             .HasOne(mr => mr.CrimeSyndicate)
             .WithMany()
             .HasForeignKey(mr => mr.CrimeSyndicateId);
+        
+        modelBuilder.Entity<EnergySystem>().ToTable("ENERGY_SYSTEMS");
+        modelBuilder.Entity<EnviromentalSystem>().ToTable("ENVIRONMENTAL_SYSTEMS");
+        modelBuilder.Entity<Weapon>().ToTable("WEAPONS");
+        
+        modelBuilder.Entity<Machinery>()
+            .HasOne(m => m.Compartment)
+            .WithMany()
+            .HasForeignKey(m => m.CompartmentId);
+
     }
     
     
