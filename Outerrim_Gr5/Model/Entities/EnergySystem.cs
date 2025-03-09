@@ -1,6 +1,8 @@
-﻿namespace Model.Entities;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
-public class EnergySystem
+namespace Model.Entities;
+[Table("ENERGY_SYSTEMS")]
+public class EnergySystem : Machinery
 {
     
 }

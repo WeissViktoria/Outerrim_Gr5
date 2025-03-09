@@ -1,6 +1,9 @@
-﻿namespace Model.Entities.Depitors;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
-public class EnviromentalSystem
+namespace Model.Entities.Depitors;
+
+[Table("ENVIROMENTAL_SYSTEMS")]
+public class EnviromentalSystem : Machinery
 {
-    
+
 }

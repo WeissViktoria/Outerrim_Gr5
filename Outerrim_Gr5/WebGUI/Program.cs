@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using Model.Configurations;
 using WebGUI.Components;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -5,6 +7,13 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+builder.Services.AddDbContextFactory<OuterrimDbContext>(
+    options => options.UseMySql(
+        builder.Configuration.GetConnectionString("DefaultConnection"),
+        new MySqlServerVersion(new Version(8,0,27))
+    )
+);
 
 var app = builder.Build();
 

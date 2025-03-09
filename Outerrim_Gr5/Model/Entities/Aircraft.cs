@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Model.Entities;
 
+[Table("AIRCRAFTS")]
 public class Aircraft
 {
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -11,16 +12,22 @@ public class Aircraft
 
     public AircraftSpezifikation Spezifikation { get; set; }
 
-    [Column("SPEZIFIKATION_ID")] public int SpezifikationId { get; set; }
+    [Column("SPECIFICATION_ID")] 
+    public int SpezifikationId { get; set; }
 
     [Required, Range(0, 100)]
-    [Column("SPEZIFICATION_ID")]
+    [Column("FUEL")]
     public int Fuel { get; set; }
 
     [Required, Range(0, 100)]
     [Column("SPEED")]
     public int Speed { get; set; }
 
-    [Column("ALTITUDE")] public int Altitude { get; set; }
-    [MaxLength(200)] [Column("NAME")] public string Name { get; set; }
+    [Column("ALTITUDE")] 
+    public int Altitude { get; set; }
+    [StringLength(100), Required] 
+    [Column("NAME")] 
+    public string Name { get; set; }
+    public List<Compartment> Compartments { get; set; }
+    public List<Crew> CrewItems { get; set; }
 }

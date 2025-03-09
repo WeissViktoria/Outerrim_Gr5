@@ -5,5 +5,5 @@ namespace Model.Entities;
 [Table("WEAPONS")]
 public class Weapon: Machinery
 {
-    
+
 }

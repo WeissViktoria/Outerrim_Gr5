@@ -30,7 +30,7 @@ public class OuterrimDbContext : DbContext
 
         modelBuilder.Entity<Compartment>()
             .HasOne(c => c.Aircraft)
-            .WithMany()
+            .WithMany(c => c.Compartments)
             .HasForeignKey(c => c.Aircraft_Id);
 
         modelBuilder.Entity<Crew>()
@@ -38,7 +38,7 @@ public class OuterrimDbContext : DbContext
 
         modelBuilder.Entity<Crew>()
             .HasOne(c => c.Aircraft)
-            .WithMany()
+            .WithMany(c => c.CrewItems)
             .HasForeignKey(c => c.Aircraft_Id);
 
         modelBuilder.Entity<Crew>()
@@ -58,6 +58,16 @@ public class OuterrimDbContext : DbContext
             .HasOne(mr => mr.CrimeSyndicate)
             .WithMany()
             .HasForeignKey(mr => mr.CrimeSyndicateId);
+        
+        modelBuilder.Entity<EnergySystem>().ToTable("ENERGY_SYSTEMS");
+        modelBuilder.Entity<EnviromentalSystem>().ToTable("ENVIRONMENTAL_SYSTEMS");
+        modelBuilder.Entity<Weapon>().ToTable("WEAPONS");
+        
+        modelBuilder.Entity<Machinery>()
+            .HasOne(m => m.Compartment)
+            .WithMany()
+            .HasForeignKey(m => m.CompartmentId);
+        
     }
     
     
