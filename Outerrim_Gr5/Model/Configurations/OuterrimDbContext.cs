@@ -1,6 +1,7 @@
 ﻿using System.Reflection.PortableExecutable;
 using Microsoft.EntityFrameworkCore;
 using Model.Entities;
+using Model.Entities.Depitors;
 using Weapon = Model.Entities.Weapon;
 
 namespace Model.Configurations;
@@ -64,7 +65,7 @@ public class OuterrimDbContext : DbContext
         modelBuilder.Entity<Machinery>()
             .HasOne(m => m.Compartment)
             .WithMany()
-            .HasForeignKey(m => m.CompartmentId);
+            .HasForeignKey(m => m.Compartment_Id);
 
     }
     
