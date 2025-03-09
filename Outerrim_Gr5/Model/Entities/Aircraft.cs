@@ -8,12 +8,14 @@ public class Aircraft
 {
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     [Column("AIRCRAFT_ID")]
-    public int Id { get; set; }
 
-    public AircraftSpezification Spezification { get; set; }
-    [Column("SPEZIFICATION_ID")] 
-    
-    public int SpezificationId { get; set; }
+    public int ID { get; set; }
+
+    public AircraftSpezifikation Spezifikation { get; set; }
+
+    [Column("SPECIFICATION_ID")] 
+    public int SpezifikationId { get; set; }
+
     [Required, Range(0, 100)]
     [Column("FUEL")]
     public int Fuel { get; set; }
@@ -21,6 +23,7 @@ public class Aircraft
     [Required, Range(0, 10)]
     [Column("SPEED")]
     public int Speed { get; set; }
+
 
     [Required, Range(0, 10)]
     [Column("ALTITUDE")] 
@@ -31,6 +34,5 @@ public class Aircraft
     public string Name { get; set; }
     
     public List<Compartment> Compartments { get; set; }
-    
     public List<Crew> CrewItems { get; set; }
 }

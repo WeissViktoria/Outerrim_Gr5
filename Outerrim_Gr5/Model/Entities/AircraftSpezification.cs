@@ -27,7 +27,7 @@ public class AircraftSpezifikation
     public int MaxSpeed { get; set; }
 
     [Required, Range(0, 20)]
-    [Column("MAX_ALTITUDe")]
+    [Column("MAX_ALTITUDE")]
     public int MaxAltitude { get; set; }
 
     [Required, StringLength(200)]
