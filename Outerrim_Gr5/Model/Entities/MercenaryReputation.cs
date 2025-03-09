@@ -2,11 +2,12 @@
 
 namespace Model.Entities;
 
-[Table("MERCENARY_HAS_REPUTATION_JT")]
-public class MercenaryReputation
-{
+[Table("MERCENARY_HAS_REPUTATIONS_JT")]
+public class MercenaryReputation {
+    
     public Mercenary Mercenary { get; set; }
-    [Column("MERCENARY_ID")]
+    [Column("MERCENARY_ID")] 
+    
     public int MercenaryId { get; set; }
     
     public CrimeSyndicate CrimeSyndicate { get; set; }

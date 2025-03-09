@@ -3,13 +3,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Model.Entities;
 
-
-[Table("AIRCRAFT_SPECIFICATIONS")]
 public class AircraftSpezifikation
 {
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     [Column("AIRCRAFT_SPECIFICATION_ID")]
     public int Id { get; set; }
+
 
     [Required, Range(0, 20)]
     [Column("STRUCTURE")]
@@ -35,3 +34,4 @@ public class AircraftSpezifikation
     [Column("SPECIFICATION_CODE")]
     public string SpecificationCode { get; set; }
 }
+

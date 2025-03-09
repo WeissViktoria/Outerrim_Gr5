@@ -11,11 +11,13 @@ public class Machinery
     public int Id { get; set; }
     
     public Compartment Compartment { get; set; }
+    
     [Column("COMPARTMENT_ID")]
-    public int CompartmentId { get; set; }
+    public int Compartment_Id { get; set; }
     [Required, StringLength(100)]
     [Column("LABEL")]
     public string Label { get; set; }
+    
     [Required, DataType(DataType.Text)]
     [Column("FUNCTION")]
     public string Function { get; set; }
