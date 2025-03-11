@@ -1,6 +1,11 @@
-﻿namespace Domain.Repositories.Implementations;
+﻿using Model.Configurations;
+using Model.Entities;
 
-public class AircraftRepository
+namespace Domain.Repositories.Implementations;
+
+public class AircraftRepository: ARepositoryAsync<Aircraft>
 {
-    
+    public AircraftRepository(OuterrimDbContext context) : base(context)
+    {
+    }
 }

@@ -5,58 +5,58 @@ using Model.Configurations;
 
 namespace Domain.Repositories.Implementations;
 
-public abstract class ARepository<TEntity> : IRepository<TEntity> where TEntity : class
+public abstract class ARepositoryAsync<TEntity> : IRepositoryAsync<TEntity> where TEntity : class
 {
     protected readonly OuterrimDbContext Context;
     protected readonly DbSet<TEntity> Table;
 
-    protected ARepository(OuterrimDbContext context)
+    protected ARepositoryAsync(OuterrimDbContext context)
     {
         Context = context;
         Table = context.Set<TEntity>();
     }
-    public TEntity? Create(TEntity t)
+    public async Task<TEntity> CreateAsync(TEntity t)
     {
         Table.Add(t);
-        Context.SaveChanges();
+        await Context.SaveChangesAsync();
         return t;
     }
 
-    public List<TEntity> CreateRange(List<TEntity> list)
+    public async Task<List<TEntity>> CreateRangeAsync(List<TEntity> list)
     {
         Table.AddRange(list);
-        Context.SaveChanges();
+        await Context.SaveChangesAsync();
         return list;
     }
 
-    public void Update(TEntity t)
+    public async Task UpdateAsync(TEntity t)
     {
         Context.ChangeTracker.Clear();
         Table.Update(t);
-        Context.SaveChanges();
+        await Context.SaveChangesAsync();
     }
 
-    public void UpdateRange(List<TEntity> list)
+    public async Task UpdateRangeAsync(List<TEntity> list)
     {
         Table.UpdateRange(list);
-        Context.SaveChanges();
+        await Context.SaveChangesAsync();
     }
 
-    public TEntity? Read(int id) => Table.Find(id);
+    public async Task<TEntity?> ReadAsync(int id) => await Table.FindAsync(id);
 
-    public List<TEntity> Read(Expression<Func<TEntity, bool>> filter)
-        => Table.Where(filter).ToList();
+    public async Task<List<TEntity>> ReadAsync(Expression<Func<TEntity, bool>> filter)
+        => await Table.Where(filter).ToListAsync();
     
-    public List<TEntity> Read(int start, int count)
-        => Table.Skip(start)
+    public async Task<List<TEntity>> ReadAsync(int start, int count)
+        => await Table.Skip(start)
             .Take(count)
-            .ToList();
+            .ToListAsync();
 
-    public List<TEntity> ReadAll() => Table.ToList();
+    public async Task<List<TEntity>> ReadAllAsync() => await Table.ToListAsync();
 
-    public void Delete(TEntity t)
+    public async Task DeleteAsync(TEntity t)
     {
         Table.Remove(t);
-        Context.SaveChanges();
+        await Context.SaveChangesAsync();
     }
 }
