@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Model.Entities;
 
+[Table("AIRCRAFT_SPECIFICATIONS")]
 public class AircraftSpezifikation
 {
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
